@@ -30,7 +30,6 @@ void Section_price(double price, int min, int max) {
 		Unit = 0;
 		printf("Unit %d-%d,   Unit count : %.0lf,   Price per Unit : %.2lf,   Price + %.2lf,   Sum Price : %.2lf\n", min, max, Unit_buffer, price, paid_buffer, Paid);
 	}
-	
 }
 
 int main() {
@@ -49,24 +48,31 @@ int main() {
 
 	printf("Enter Power Usage (Kw/h): ");
 	scanf_s("%lf", &Unit); /*รับค่า*/
-	if (Unit <= 150) { /*กรณีที่หน่วยไฟฟ้าที่ใช้ตำ่กว่า 150 จะแบ่งออกเป็น 5 ช่วง แต่ละช่วงจะมีราคาต่อหน่วยตั้งแต่ Price[0-4]*/
+	if (Unit <= 50) {
+		printf("Under 50 Kw/h\nFree!");
+	}
+	else if (Unit <= 150) { /*กรณีที่หน่วยไฟฟ้าที่ใช้ตำ่กว่า 150 จะแบ่งออกเป็น 5 ช่วง แต่ละช่วงจะมีราคาต่อหน่วยตั้งแต่ Price[0-4]*/
 		printf("Under 150 Kw/h\n");
 		Section_price(Price[0], 1, 15); /*หักคิด 15 หน่วยแรก*/
 		Section_price(Price[1], 16, 25); /*หักคิด 10 หน่วยต่อมา*/
 		Section_price(Price[2], 26, 35); /*หักคิด 10 หน่วยต่อมา*/
 		Section_price(Price[3], 36, 100); /*หักคิด 65 หน่วยต่อมา*/
 		Section_price(Price[4], 101, 150); /*หักคิด 50 หน่วยต่อมา*/
+		printf("\nPrice : %.2lf\n", Paid); /*ค่าไฟเปล่า*/
+		printf("+ Service charge 8.19 Bath : %.2lf\n", Paid += service_charge); /*บวกค่าบริการ*/
+		printf("Ft %.2lf : %.2lf Bath\n", Ft, Paid += Ft); /*บวกค่าผันแปร*/
+		printf("+ Vat 7%% : %.2lf Bath\n", Paid += Paid * 0.07); /*บวกภาษี*/
+		printf("\n Total = %.2lf Bath\n", Paid); /*ราคาจ่ายสุทธิ*/
 	}
 	else if(Unit > 150) { /*กรณีที่หน่วยไฟฟ้าที่ใช้มากกว่ากว่า 150 จะแบ่งออกเป็น 3 ช่วง แต่ละช่วงจะมีราคาต่อหน่วยตั้งแต่ Price[5-7]*/
 		printf("Over 150 Kw/h\n");
 		Section_price(Price[5], 1, 150); /*หักคิด 150 หน่วยแรก*/
 		Section_price(Price[6], 151, 400); /*หักคิด 250 หน่วยต่อมา*/
 		Section_price(Price[7], 401, -1); /*คิดหน่วยที่เหลือ*/
+		printf("\nPrice : %.2lf\n", Paid); /*ค่าไฟเปล่า*/
+		printf("+ Service charge 8.19 Bath : %.2lf\n", Paid += service_charge); /*บวกค่าบริการ*/
+		printf("Ft %.2lf : %.2lf Bath\n", Ft, Paid += Ft); /*บวกค่าผันแปร*/
+		printf("+ Vat 7%% : %.2lf Bath\n", Paid += Paid * 0.07); /*บวกภาษี*/
+		printf("\n Total = %.2lf Bath\n", Paid); /*ราคาจ่ายสุทธิ*/
 	}
-	printf("\nPrice : %.2lf\n", Paid); /*ค่าไฟเปล่า*/
-	printf("+ Service charge 8.19 Bath : %.2lf\n", Paid += service_charge); /*บวกค่าบริการ*/
-	printf("Ft %.2lf : %.2lf Bath\n", Ft, Paid += Ft); /*บวกค่าผันแปร*/
-	printf("+ Vat 7%% : %.2lf Bath\n", Paid += Paid*0.07); /*บวกภาษี*/
-	printf("\n Total = %.2lf Bath\n", Paid); /*ราคาจ่ายสุทธิ*/
-
 }
